@@ -1,0 +1,16 @@
+# Ignore model directory (too large, will download on Vercel)
+model/
+
+# Ignore uploads
+uploads/
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore backup files
+*.bak
+*.old
+
+# Ignore environment files
+.env

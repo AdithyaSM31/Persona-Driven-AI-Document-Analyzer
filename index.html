@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persona AI Document Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <canvas id="particleCanvas"></canvas>
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                    Persona AI Document Analyzer
+                </h1>
+                <p class="subtitle">Intelligent document analysis powered by AI</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <section class="card input-section" id="inputSection">
+                <h2 class="section-title">Configure Analysis</h2>
+                
+                <form id="analysisForm">
+                    <!-- Persona Input -->
+                    <div class="form-group">
+                        <label for="persona" class="form-label">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            User Persona
+                        </label>
+                        <input 
+                            type="text" 
+                            id="persona" 
+                            name="persona" 
+                            class="form-input"
+                            placeholder="e.g., Health-conscious home cook looking for quick meals"
+                            required
+                        >
+                    </div>
+
+                    <!-- Job to be Done Input -->
+                    <div class="form-group">
+                        <label for="job_to_be_done" class="form-label">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 11l3 3L22 4"/>
+                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                            </svg>
+                            Task Description
+                        </label>
+                        <textarea 
+                            id="job_to_be_done" 
+                            name="job_to_be_done" 
+                            class="form-input form-textarea"
+                            placeholder="e.g., Find main course dinner recipes that are easy to prepare and use common ingredients"
+                            rows="3"
+                            required
+                        ></textarea>
+                    </div>
+
+                    <!-- File Upload -->
+                    <div class="form-group">
+                        <label for="fileInput" class="form-label">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                                <polyline points="13 2 13 9 20 9"/>
+                            </svg>
+                            Upload PDF Documents
+                        </label>
+                        <div class="file-upload-wrapper">
+                            <input 
+                                type="file" 
+                                id="fileInput" 
+                                name="files[]" 
+                                accept=".pdf"
+                                multiple
+                                class="file-input"
+                                required
+                            >
+                            <label for="fileInput" class="file-upload-label">
+                                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="17 8 12 3 7 8"/>
+                                    <line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
+                                <span id="fileLabel">Choose PDF files or drag & drop</span>
+                            </label>
+                        </div>
+                        <div id="fileList" class="file-list"></div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary" id="analyzeBtn">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
+                        Analyze Documents
+                    </button>
+                </form>
+            </section>
+
+            <!-- Loading Section -->
+            <section class="card loading-section" id="loadingSection" style="display: none;">
+                <div class="loading-content">
+                    <div class="spinner"></div>
+                    <h3 class="loading-title">Analyzing Your Documents</h3>
+                    <p class="loading-text">This may take a few moments...</p>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="card results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h2 class="section-title">Analysis Results</h2>
+                    <button class="btn btn-secondary btn-small" id="newAnalysisBtn">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="1 4 1 10 7 10"/>
+                            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+                        </svg>
+                        New Analysis
+                    </button>
+                </div>
+
+                <!-- Metadata -->
+                <div class="metadata-grid" id="metadata">
+                    <!-- Dynamically populated -->
+                </div>
+
+                <!-- Top Sections -->
+                <div class="results-content">
+                    <h3 class="results-subtitle">Most Relevant Sections</h3>
+                    <div id="topSections" class="sections-grid">
+                        <!-- Dynamically populated -->
+                    </div>
+
+                    <!-- Detailed Analysis -->
+                    <h3 class="results-subtitle">Detailed Analysis</h3>
+                    <div id="detailedAnalysis" class="analysis-list">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Error Section -->
+            <section class="card error-section" id="errorSection" style="display: none;">
+                <div class="error-content">
+                    <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    <h3 class="error-title">Something went wrong</h3>
+                    <p class="error-text" id="errorMessage"></p>
+                    <button class="btn btn-secondary" id="retryBtn">Try Again</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Persona AI Document Analyzer 2025</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
