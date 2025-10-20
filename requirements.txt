@@ -1,4 +1,5 @@
-# requirements.txt
+# requirements.txt - DO NOT USE WITH VERCEL (model too large)
+# This file is for Railway.app, Render.com, or local development
 
 # Web framework
 Flask==3.0.0
@@ -8,7 +9,7 @@ gunicorn==21.2.0
 # PDF processing
 PyMuPDF==1.23.26
 
-# ML and embeddings
+# ML and embeddings (WARNING: ~500MB total - exceeds Vercel 250MB limit)
 sentence-transformers==2.2.2
 
 # Numerical operations
