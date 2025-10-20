@@ -24,18 +24,30 @@ app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50MB max file size
 # Ensure upload directory exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Load model once at startup
+# Load model once at startup - but lazily on first request
 model = None
+model_loading = False
 
 def load_model():
-    global model
-    if model is None:
+    global model, model_loading
+    if model is None and not model_loading:
+        model_loading = True
         try:
-            model = SentenceTransformer(MODEL_PATH)
-            print("Model loaded successfully!")
+            print("Loading model...")
+            # Try local model first, then download if needed
+            if os.path.exists(MODEL_PATH):
+                model = SentenceTransformer(MODEL_PATH)
+                print("Model loaded from local path!")
+            else:
+                print("Downloading model (first time only)...")
+                model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+                print("Model downloaded and loaded!")
         except Exception as e:
             print(f"Error loading model: {e}")
             model = None
+        finally:
+            model_loading = False
+    return model
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -76,14 +88,16 @@ def extract_structure_from_pdf(pdf_path):
 
 def analyze_documents(pdf_files, persona, job_to_be_done):
     """Main analysis function"""
-    if model is None:
-        return {"error": "Model not loaded. Please run download_model.py first."}
+    # Load model on first use
+    current_model = load_model()
+    if current_model is None:
+        return {"error": "Model failed to load. Please try again."}
 
     start_time = time.time()
 
     # Generate query embedding
     query_text = f"Persona: {persona}. Task: {job_to_be_done}"
-    query_embedding = model.encode(query_text)
+    query_embedding = current_model.encode(query_text)
 
     all_sections = []
 
@@ -99,7 +113,7 @@ def analyze_documents(pdf_files, persona, job_to_be_done):
             for item in structure["outline"]
         ]
 
-        section_embeddings = model.encode(section_texts_for_embedding)
+        section_embeddings = current_model.encode(section_texts_for_embedding)
 
         if len(section_embeddings) == 0:
             continue
@@ -223,19 +237,16 @@ def analyze():
 
 @app.route('/api/health', methods=['GET'])
 def health():
-    """Health check endpoint"""
+    """Health check endpoint - returns healthy even if model not loaded yet"""
     return jsonify({
         "status": "healthy",
-        "model_loaded": model is not None
+        "model_loaded": model is not None,
+        "ready": True
     })
 
 if __name__ == '__main__':
     print("Starting Persona AI Document Analyzer...")
-    print("Loading model...")
-    load_model()
-    if model:
-        print("✓ Model loaded successfully!")
-    else:
-        print("⚠ Warning: Model not loaded. Please run 'python download_model.py' first.")
+    print("Model will be loaded on first request (lazy loading)")
     print("\nStarting web server...")
-    app.run(debug=True, host='0.0.0.0', port=5000, use_reloader=False)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=False, host='0.0.0.0', port=port)
