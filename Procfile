@@ -1,2 +1,1 @@
-# Railway Deployment Configuration
-web: gunicorn -b 0.0.0.0:$PORT app:app --timeout 120
+web: gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120 --workers 2 --log-level info
