@@ -1,0 +1,14 @@
+# .railwayignore - Files to exclude from Railway deployment
+Dockerfile
+.dockerignore
+input/
+output/
+model/
+uploads/
+*.bak
+*.old
+__pycache__/
+*.pyc
+.git/
+.vscode/
+.env
