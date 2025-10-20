@@ -1,15 +1,14 @@
-# requirements.txt - Minimal for Railway (must be under 4GB)
+# requirements.txt - For Render deployment
 
-# Web framework (lightweight)
+# Web framework
 Flask==3.0.0
 Flask-CORS==4.0.0
 gunicorn==21.2.0
 
-# PDF processing
-PyMuPDF==1.23.26
+# PDF processing - use binary wheel version that doesn't require compilation
+PyMuPDF==1.24.0
 
-# Use sentence-transformers without explicit torch (let it install minimal deps)
-# This avoids the 6GB torch installation
+# ML libraries - sentence-transformers will install compatible torch automatically
 sentence-transformers==2.2.2
 
 # Numerical operations
