@@ -1,4 +1,4 @@
-# requirements.txt - Optimized for Railway deployment
+# requirements.txt - Compatible versions for Railway deployment
 
 # Web framework
 Flask==3.0.0
@@ -8,9 +8,9 @@ gunicorn==21.2.0
 # PDF processing
 PyMuPDF==1.23.26
 
-# ML and embeddings - use CPU-only PyTorch to reduce size
---extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.1.0+cpu
+# ML and embeddings - compatible versions
+torch==2.1.2
+transformers==4.36.2
 sentence-transformers==2.2.2
 
 # Numerical operations
