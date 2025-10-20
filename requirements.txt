@@ -1,5 +1,4 @@
-# requirements.txt - DO NOT USE WITH VERCEL (model too large)
-# This file is for Railway.app, Render.com, or local development
+# requirements.txt - Optimized for Railway deployment
 
 # Web framework
 Flask==3.0.0
@@ -9,7 +8,9 @@ gunicorn==21.2.0
 # PDF processing
 PyMuPDF==1.23.26
 
-# ML and embeddings (WARNING: ~500MB total - exceeds Vercel 250MB limit)
+# ML and embeddings - use CPU-only PyTorch to reduce size
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.1.0+cpu
 sentence-transformers==2.2.2
 
 # Numerical operations
