@@ -1,15 +1,16 @@
 # requirements.txt
 
-# Use a compatible version of sentence-transformers
-sentence-transformers==2.2.2
-
-# For PDF processing
-PyMuPDF==1.23.26
-
-# For numerical operations and similarity calculations
-numpy==1.24.4
-scikit-learn==1.2.2
-
 # Web framework
 Flask==3.0.0
 Flask-CORS==4.0.0
+gunicorn==21.2.0
+
+# PDF processing
+PyMuPDF==1.23.26
+
+# ML and embeddings
+sentence-transformers==2.2.2
+
+# Numerical operations
+numpy==1.24.4
+scikit-learn==1.3.2

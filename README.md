@@ -1,10 +1,12 @@
 # Persona-Driven AI Document Analyzer
 
-🚀 **Live Demo**: [Deploy on Vercel](https://vercel.com) | 🎯 **Adobe India Hackathon 2025 - Round 1B**
+🚀 **Deploy**: [Railway.app](https://railway.app) (Recommended) | 🎯 **Adobe India Hackathon 2025 - Round 1B**
 
 An intelligent document analysis system that uses AI to extract and rank relevant sections from PDF documents based on user personas and specific tasks.
 
 This repository contains the solution for Round 1B of the Adobe Hackathon. The project features both a modern web UI and a Docker-based command-line interface.
+
+> **Note**: This app uses ML models (~500MB) which exceed Vercel's size limits. We recommend deploying to **Railway.app** or **Render.com** for ML apps. See [RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md) for quick deployment.
 
 ## ✨ Features
 
@@ -23,11 +25,11 @@ This repository contains the solution for Round 1B of the Adobe Hackathon. The p
 
 ## 🛠️ Tech Stack
 
-- **Backend**: Flask (Python) + Vercel Serverless Functions
+- **Backend**: Flask (Python) with Gunicorn
 - **ML Model**: Sentence Transformers (all-MiniLM-L6-v2)
 - **PDF Processing**: PyMuPDF
 - **Frontend**: HTML5, CSS3, Vanilla JavaScript
-- **Deployment**: Vercel (Web) + Docker (CLI)
+- **Deployment**: Railway.app / Render.com (Web) + Docker (CLI)
 
 ## 📖 How It Works
 
@@ -67,24 +69,27 @@ python app.py
 
 5. Open your browser and navigate to `http://localhost:5000`
 
-#### Deploy to Vercel
+#### Deploy to Cloud (Railway.app - Recommended)
 
-1. Install Vercel CLI:
-```bash
-npm install -g vercel
-```
+**Quick Deploy to Railway** (Best for ML apps with large models):
 
-2. Login to Vercel:
-```bash
-vercel login
-```
+1. Go to **https://railway.app**
+2. Click **"Start a New Project"** → **"Deploy from GitHub repo"**
+3. Select **`AdithyaSM31/Persona-Driven-AI-Document-Analyzer`**
+4. Railway auto-deploys in 3-5 minutes!
+5. Get your public URL from **Settings → Domains**
 
-3. Deploy:
-```bash
-vercel
-```
+See [RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md) for detailed instructions.
 
-The first deployment will take longer as it downloads the ML model. Subsequent deployments are cached.
+**Alternative: Render.com**
+
+1. Go to **https://render.com**
+2. New → **"Web Service"** → Connect GitHub
+3. **Build Command**: `pip install -r requirements.txt`
+4. **Start Command**: `gunicorn -b 0.0.0.0:$PORT app:app --timeout 120`
+5. Deploy!
+
+> **Why not Vercel?** The ML model (~500MB) exceeds Vercel's 250MB size limit. Railway and Render are designed for ML apps with no size restrictions.
 
 ### Option 2: Docker CLI (Original Challenge Solution)
 
