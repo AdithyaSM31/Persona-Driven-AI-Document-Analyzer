@@ -8,7 +8,10 @@ gunicorn==21.2.0
 # PDF processing - use version with pre-built wheels for Python 3.11
 PyMuPDF==1.23.8
 
-# ML libraries - sentence-transformers will install compatible torch automatically
+# ML libraries - enforce CPU only PyTorch to save memory on Render Free Tier
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.1.2+cpu
+torchvision==0.16.2+cpu
 sentence-transformers==2.2.2
 
 # Numerical operations (compatible with Python 3.11)
