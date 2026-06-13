@@ -12,7 +12,6 @@ jobs:
     steps:
       - name: Ping Render Health Endpoint
         run: |
-          # Replace 'YOUR_APP' with your actual Render service name/URL
-          # e.g., https://persona-ai-demo.onrender.com/api/health
-          curl -sSf https://YOUR_APP.onrender.com/api/health > /dev/null
+          # Automatically ping the Render health endpoint to prevent free tier sleep
+          curl -sSf https://persona-ai-0jrl.onrender.com/api/health > /dev/null
           echo "Ping successful!"

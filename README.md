@@ -1,12 +1,12 @@
 # Persona-Driven AI Document Analyzer
 
-🚀 **Deploy**: [Railway.app](https://railway.app) (Recommended) | 🎯 **Adobe India Hackathon 2025 - Round 1B**
+🚀 **Live Deployment**: [https://persona-ai-0jrl.onrender.com](https://persona-ai-0jrl.onrender.com) | 🎯 **Adobe India Hackathon 2025 - Round 1B**
 
 An intelligent document analysis system that uses AI to extract and rank relevant sections from PDF documents based on user personas and specific tasks.
 
-This repository contains the solution for Round 1B of the Adobe Hackathon. The project features both a modern web UI and a Docker-based command-line interface.
+This repository contains the solution for Round 1B of the Adobe Hackathon. The project features a modern Web UI powered by Flask and a backend built around SentenceTransformers.
 
-> **Note**: This app uses ML models (~500MB) which exceed Vercel's size limits. We recommend deploying to **Railway.app** or **Render.com** for ML apps. See [RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md) for quick deployment.
+> **Architecture Note**: This application requires ~500MB of RAM for the PyTorch and SentenceTransformer models. It is configured to run efficiently on **Render.com's Free Tier** by using CPU-only PyTorch wheels to optimize memory constraints.
 
 ## ✨ Features
 
@@ -172,15 +172,17 @@ docker run --rm -v "$(pwd)/input":/app/input -v "$(pwd)/output":/app/output --ne
 
 ## 🎨 UI Features
 
-### Dark Mode Toggle
-Switch between light and dark themes with a single click. Theme preference is saved locally.
+### Premium Dark/Light Modes
+Switch between highly polished deep space dark mode and clean light mode. The theme seamlessly transitions all background and card elements.
 
-### Animated Background
-- **Particle Network**: Interactive particles that connect when nearby
-- **Gradient Orbs**: Floating gradient spheres with smooth animations
+### React-Bits Inspired Aurora Background
+- **Dynamic CSS Mesh Gradient**: Smooth, slow-drifting aurora blobs (`@keyframes`) that float behind the application.
+- **Noise Texture Overlay**: An SVG noise filter (`feTurbulence`) provides a tactile, premium feel reminiscent of modern SaaS interfaces.
 
-### Glassmorphism Design
-Modern frosted glass effect on cards and modals for a sophisticated look.
+### Deep Glassmorphism & 3D Interactions
+- **Frosted Glass Cards**: Cards use `backdrop-filter: blur(32px)` and layered inner-glows to mimic physical glass.
+- **3D Mouse Tilt**: Hovering over configuration cards or results applies a dynamic 3D perspective tilt (`rotateX`/`rotateY`) driven by vanilla JavaScript.
+- **Staggered Blur-Reveal**: Analysis results cascade into view sequentially with a custom blur-to-focus animation.
 
 ## 🔧 Configuration
 
