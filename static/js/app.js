@@ -37,8 +37,8 @@ let analysisResults = null;
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
-    initParticles();
     setupEventListeners();
+    setupTiltEffect();
     checkServerHealth();
 });
 
@@ -55,87 +55,39 @@ function toggleTheme() {
     localStorage.setItem('theme', newTheme);
 }
 
-// Particle Animation
-function initParticles() {
-    const canvas = document.getElementById('particleCanvas');
-    if (!canvas) return;
+// 3D Tilt Effect for premium glassmorphism
+function setupTiltEffect() {
+    const tiltElements = document.querySelectorAll('.tilt-card');
     
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const particles = [];
-    const particleCount = 50;
-
-    class Particle {
-        constructor() {
-            this.reset();
-        }
-
-        reset() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.5;
-            this.vy = (Math.random() - 0.5) * 0.5;
-            this.radius = Math.random() * 2 + 1;
-        }
-
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-
-            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-        }
-
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(139, 92, 246, 0.3)';
-            ctx.fill();
-        }
-    }
-
-    for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const applyTilt = (e, el) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
         
-        particles.forEach(particle => {
-            particle.update();
-            particle.draw();
-        });
+        // Calculate rotation based on cursor position (max 5 degrees)
+        const xPct = (x / rect.width - 0.5) * 2;
+        const yPct = (y / rect.height - 0.5) * 2;
+        
+        const rotateX = yPct * -5;
+        const rotateY = xPct * 5;
+        
+        el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        el.style.transition = 'none';
+        
+        // Optional: dynamic glare/shine effect could go here
+    };
 
-        // Draw connections
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+    const resetTilt = (el) => {
+        el.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
+        el.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+    };
 
-                if (distance < 100) {
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = `rgba(139, 92, 246, ${0.2 * (1 - distance / 100)})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.stroke();
-                }
-            }
-        }
-
-        requestAnimationFrame(animate);
-    }
-
-    animate();
-
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    tiltElements.forEach(el => {
+        el.addEventListener('mousemove', (e) => applyTilt(e, el));
+        el.addEventListener('mouseleave', () => resetTilt(el));
     });
 }
+
 
 // Event Listeners
 function setupEventListeners() {
@@ -345,17 +297,19 @@ function displayResults(results) {
     
     // Top Sections
     topSections.innerHTML = results.extracted_sections.map((section, index) => `
-        <div class="section-card" onclick="showDetailedAnalysis(${index})">
-            <div class="section-header">
-                <div class="section-rank">${section.importance_rank}</div>
-                <div class="section-info">
-                    <div class="section-title-text">${section.section_title}</div>
-                    <div class="section-meta">
-                        <span>📄 ${section.document}</span>
-                        <span>📖 Page ${section.page_number}</span>
-                        ${section.relevance_score ? `
-                            <span class="section-badge">${section.relevance_score}% Match</span>
-                        ` : ''}
+        <div class="section-card tilt-card" style="animation-delay: ${index * 0.15}s" onclick="showDetailedAnalysis(${index})">
+            <div class="section-card-inner">
+                <div class="section-header">
+                    <div class="section-rank">${section.importance_rank}</div>
+                    <div class="section-info">
+                        <div class="section-title-text">${section.section_title}</div>
+                        <div class="section-meta">
+                            <span>📄 ${section.document}</span>
+                            <span>📖 Page ${section.page_number}</span>
+                            ${section.relevance_score ? `
+                                <span class="section-badge">${section.relevance_score}% Match</span>
+                            ` : ''}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -364,15 +318,22 @@ function displayResults(results) {
     
     // Detailed Analysis
     detailedAnalysis.innerHTML = results.sub_section_analysis.map((analysis, index) => `
-        <div class="analysis-card" onclick="showDetailedAnalysis(${index})">
-            <div class="analysis-header">
-                <span class="analysis-title">${analysis.document}</span>
-                <span class="analysis-page">Page ${analysis.page_number}</span>
+        <div class="analysis-card tilt-card" style="animation-delay: ${(index * 0.15) + 0.5}s" onclick="showDetailedAnalysis(${index})">
+            <div class="tilt-card-inner">
+                <div class="analysis-header">
+                    <span class="analysis-title">${analysis.document}</span>
+                    <span class="analysis-page">Page ${analysis.page_number}</span>
+                </div>
+                <p class="analysis-text">${analysis.refined_text}</p>
             </div>
-            <p class="analysis-text">${analysis.refined_text}</p>
         </div>
     `).join('');
     
+    // Re-apply tilt effect to newly created elements
+    setTimeout(() => {
+        setupTiltEffect();
+    }, 100);
+
     resultsSection.scrollIntoView({ behavior: 'smooth' });
 }
 

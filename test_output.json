@@ -1,0 +1,89 @@
+{
+  "extracted_sections": [
+    {
+      "document": "Lunch_Ideas.pdf",
+      "importance_rank": 1,
+      "page_number": 14,
+      "relevance_score": 46.94,
+      "section_title": "Section (Page 14)"
+    },
+    {
+      "document": "Breakfast_Ideas.pdf",
+      "importance_rank": 2,
+      "page_number": 16,
+      "relevance_score": 45.64,
+      "section_title": "Cottage Cheese and Veggie Bowl"
+    },
+    {
+      "document": "Dinner_Ideas_-_Mains_1.pdf",
+      "importance_rank": 3,
+      "page_number": 5,
+      "relevance_score": 43.88,
+      "section_title": "Instructions:"
+    },
+    {
+      "document": "Dinner_Ideas_-_Mains_2.pdf",
+      "importance_rank": 4,
+      "page_number": 7,
+      "relevance_score": 43.49,
+      "section_title": "Section (Page 7)"
+    },
+    {
+      "document": "Lunch_Ideas.pdf",
+      "importance_rank": 5,
+      "page_number": 6,
+      "relevance_score": 43.27,
+      "section_title": "Section (Page 6)"
+    }
+  ],
+  "metadata": {
+    "input_documents": [
+      "Breakfast_Ideas.pdf",
+      "Dinner_Ideas_-_Mains_1.pdf",
+      "Dinner_Ideas_-_Mains_2.pdf",
+      "Dinner_Ideas_-_Mains_3.pdf",
+      "Dinner_Ideas_-_Sides_1.pdf",
+      "Dinner_Ideas_-_Sides_2.pdf",
+      "Dinner_Ideas_-_Sides_3.pdf",
+      "Dinner_Ideas_-_Sides_4.pdf",
+      "Lunch_Ideas.pdf"
+    ],
+    "job_to_be_done": "Prepare a vegetarian buffet-style dinner menu for a corporate gathering, including gluten-free items.",
+    "persona": "Food Contractor",
+    "processing_time": 5.42,
+    "processing_timestamp": "2026-06-13T13:59:22Z",
+    "total_sections_analyzed": 126
+  },
+  "sub_section_analysis": [
+    {
+      "document": "Lunch_Ideas.pdf",
+      "page_number": 14,
+      "refined_text": "\u2022  1/4 cup spinach, chopped  \u2022  1/4 cup shredded carrots  \u2022  1 tablespoon tahini  \u2022  1 tablespoon lemon juice  \u2022  Salt and pepper to taste  Instructions:  \u2022  In a bowl, combine the mashed chickpeas, spinach, carrots, tahini, and lemon juice.  \u2022  Season with salt and pepper.  \u2022  Lay the tortilla flat and spread the mixture evenly.  \u2022  Roll up the tortilla tightly and slice in half.        Turkey and Apple Sandwich  Ingredients:  \u2022  2 slices whole grain bread  \u2022  4 slices turkey breast  \u2022  1/2 app...",
+      "section_title": "Section (Page 14)"
+    },
+    {
+      "document": "Breakfast_Ideas.pdf",
+      "page_number": 16,
+      "refined_text": "\u2022  Serve immediately.        Cottage Cheese and Veggie Bowl  Ingredients:  \u2022  1 cup cottage cheese  \u2022  1/4 cup diced cucumber  \u2022  1/4 cup cherry tomatoes, halved  \u2022  1/4 cup diced bell pepper  \u2022  Salt and pepper to taste  Instructions:  \u2022  In a bowl, combine cottage cheese, cucumber, cherry tomatoes, and bell pepper.  \u2022  Season with salt and pepper.  \u2022  Serve immediately.          Almond Butter and Apple Slices  Ingredients:  \u2022  1 apple, sliced  \u2022  2 tablespoons almond butter  Instructions:  \u2022  ...",
+      "section_title": "Cottage Cheese and Veggie Bowl"
+    },
+    {
+      "document": "Dinner_Ideas_-_Mains_1.pdf",
+      "page_number": 5,
+      "refined_text": "\u2022  Shredded lettuce, diced tomatoes, shredded cheese, sour cream, and salsa for toppings  Instructions:  \u2022  In a skillet, cook ground beef over medium heat until browned.  \u2022  Add diced onion and minced garlic, saut\u00e9 until softened.  \u2022  Stir in taco seasoning and water, simmer until thickened.  \u2022  Serve beef mixture in taco shells or tortillas with desired toppings.        Lasagna  Ingredients:  \u2022  1 pound ground beef  \u2022  1 small onion, diced  \u2022  2 cloves garlic, minced  \u2022  1 jar (24 ounces) mari...",
+      "section_title": "Instructions:"
+    },
+    {
+      "document": "Dinner_Ideas_-_Mains_2.pdf",
+      "page_number": 7,
+      "refined_text": "\u2022  1/2 cup basil pesto  \u2022  1/4 cup cherry tomatoes, halved  \u2022  1/4 cup grated Parmesan cheese  \u2022  2 tablespoons olive oil  \u2022  Salt and pepper to taste  Instructions:  \u2022  In a large skillet, heat olive oil over medium heat.  \u2022  Add zucchini noodles and cook until tender.  \u2022  Stir in basil pesto and cherry tomatoes.  \u2022  Season with salt and pepper.  \u2022  Sprinkle with grated Parmesan cheese and serve.        Beef and Broccoli  Ingredients:  \u2022  1 pound beef sirloin, thinly sliced  \u2022  2 cups broccoli ...",
+      "section_title": "Section (Page 7)"
+    },
+    {
+      "document": "Lunch_Ideas.pdf",
+      "page_number": 6,
+      "refined_text": "\u2022  1 cup cooked chicken breast, diced  \u2022  1/2 avocado, diced  \u2022  1/4 cup cherry tomatoes, halved  \u2022  1/4 cup red onion, finely chopped  \u2022  2 tablespoons olive oil  \u2022  1 tablespoon lemon juice  \u2022  Salt and pepper to taste  Instructions:  \u2022  In a bowl, combine the chicken, avocado, tomatoes, and red onion.  \u2022  Drizzle with olive oil and lemon juice.  \u2022  Season with salt and pepper, then toss to combine.        Turkey and Cheese Roll-Ups  Ingredients:  \u2022  4 slices turkey breast  \u2022  4 slices cheese ...",
+      "section_title": "Section (Page 6)"
+    }
+  ]
+}
