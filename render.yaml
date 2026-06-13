@@ -8,6 +8,6 @@ services:
     startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120 --workers 1 --threads 4 --worker-class gthread --log-level info"
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.2
+        value: 3.11.9
       - key: FLASK_ENV
         value: production
