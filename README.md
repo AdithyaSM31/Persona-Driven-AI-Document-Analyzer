@@ -1,10 +1,10 @@
 # Persona-Driven AI Document Analyzer
 
-🚀 **Live Deployment**: [https://persona-ai-0jrl.onrender.com](https://persona-ai-0jrl.onrender.com) | 🎯 **Adobe India Hackathon 2025 - Round 1B**
+🚀 **Live Deployment**: [https://persona-ai-0jrl.onrender.com](https://persona-ai-0jrl.onrender.com)
 
 An intelligent document analysis system that uses AI to extract and rank relevant sections from PDF documents based on user personas and specific tasks.
 
-This repository contains the solution for Round 1B of the Adobe Hackathon. The project features a modern Web UI powered by Flask and a backend built around SentenceTransformers.
+The project features a modern Web UI powered by Flask and a backend built around SentenceTransformers.
 
 > **Architecture Note**: This application requires ~500MB of RAM for the PyTorch and SentenceTransformer models. It is configured to run efficiently on **Render.com's Free Tier** by using CPU-only PyTorch wheels to optimize memory constraints.
 
@@ -216,8 +216,7 @@ This project is open source and available under the MIT License.
 - Sentence Transformers for the ML model
 - Flask for the web framework
 - Vercel for serverless deployment
-- Adobe India for the hackathon challenge
 
 ---
 
-Made with ❤️ for Adobe India Hackathon 2025
+Made with ❤️
